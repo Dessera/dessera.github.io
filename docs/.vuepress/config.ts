@@ -3,7 +3,7 @@ import { viteBundler } from "@vuepress/bundler-vite";
 import { plumeTheme } from "vuepress-theme-plume";
 
 export default defineUserConfig({
-  base: "/dessera-blog/",
+  base: "/",
   lang: "zh-CN",
   title: "DE-LAB",
   description: "Dessera的个人主页",

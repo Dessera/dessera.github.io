@@ -3,7 +3,7 @@ title: 使用cv2的VideoCapture进行摄像头定时拍摄
 tags:
 - Python
 - cv2
-createTime: 2024/09/09 22:35:05
+createTime: 2024/09/09 22:10:39
 permalink: /article/9adgk4ek/
 ---
 
