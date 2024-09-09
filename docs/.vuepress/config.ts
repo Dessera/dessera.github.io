@@ -5,7 +5,7 @@ import { plumeTheme } from "vuepress-theme-plume";
 export default defineUserConfig({
   base: "/dessera-blog/",
   lang: "zh-CN",
-  title: "DesseraBlog",
+  title: "DE-LAB",
   description: "Dessera的个人主页",
 
   bundler: viteBundler(),
