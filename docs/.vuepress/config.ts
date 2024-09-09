@@ -1,12 +1,12 @@
-import { defineUserConfig } from 'vuepress'
-import { viteBundler } from '@vuepress/bundler-vite'
-import { plumeTheme } from 'vuepress-theme-plume'
+import { defineUserConfig } from "vuepress";
+import { viteBundler } from "@vuepress/bundler-vite";
+import { plumeTheme } from "vuepress-theme-plume";
 
 export default defineUserConfig({
-  base: '/',
-  lang: 'zh-CN',
-  title: 'DesseraBlog',
-  description: 'Dessera的个人主页',
+  base: "/dessera-blog/",
+  lang: "zh-CN",
+  title: "DesseraBlog",
+  description: "Dessera的个人主页",
 
   bundler: viteBundler(),
 
@@ -30,11 +30,11 @@ export default defineUserConfig({
        */
       markdownEnhance: {
         demo: true,
-      //   include: true,
-      //   chart: true,
-      //   echarts: true,
-      //   mermaid: true,
-      //   flowchart: true,
+        //   include: true,
+        //   chart: true,
+        //   echarts: true,
+        //   mermaid: true,
+        //   flowchart: true,
       },
 
       /**
@@ -75,4 +75,4 @@ export default defineUserConfig({
       // },
     },
   }),
-})
+});
