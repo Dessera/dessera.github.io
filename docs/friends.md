@@ -15,6 +15,3 @@ list:
     avatar: https://avatars.githubusercontent.com/u/108673387?v=4
     desc: C/C++/OS大爹
 ---
-
-  <!-- 诗鸷Temsys: <https://blog.museday.top>
-  Charliechen114514: <https://charliechen114514.github.io> -->
