@@ -7,7 +7,7 @@ list:
   -
     name: 诗鸷Temsys
     link: https://blog.museday.top
-    avatar: https://shenshichao.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Feea56234-6925-4f62-b4e6-7335a38a4829%2Feaa082ba-c654-4043-ad5a-42432edf22d6%2FUntitled_Artwork_6.png?table=block&id=0df9b632-4e75-45e0-99d5-89bdba138c36&spaceId=eea56234-6925-4f62-b4e6-7335a38a4829&width=40&userId=&cache=v2
+    avatar: https://avatars.githubusercontent.com/u/103398168?v=4
     desc: 全能大佬
   -
     name: Charliechen114514
