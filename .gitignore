@@ -5,3 +5,6 @@ cache
 .DS_Store
 
 .direnv
+
+# vuepress cache
+docs/.vuepress/.cache
