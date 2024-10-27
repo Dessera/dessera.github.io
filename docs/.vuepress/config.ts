@@ -6,7 +6,7 @@ export default defineUserConfig({
   base: "/",
   lang: "zh-CN",
   title: "DE-LAB",
-  description: "Dessera的个人主页",
+  description: "Dessera的个人博客",
 
   bundler: viteBundler(),
 
@@ -63,16 +63,14 @@ export default defineUserConfig({
        * comments
        * @see https://theme-plume.vuejs.press/guide/features/comments/
        */
-      // comment: {
-      //   provider: '', // "Artalk" | "Giscus" | "Twikoo" | "Waline"
-      //   comment: true,
-      //   repo: '',
-      //   repoId: '',
-      //   categoryId: '',
-      //   mapping: 'pathname',
-      //   reactionsEnabled: true,
-      //   inputPosition: 'top',
-      // },
+      comment: {
+        provider: "Giscus", // "Artalk" | "Giscus" | "Twikoo" | "Waline"
+        comment: true,
+        repo: "Dessera/dessera.github.io",
+        repoId: "R_kgDOMu79bw",
+        category: "Announcements",
+        categoryId: "DIC_kwDOMu79b84Cjui1",
+      },
     },
   }),
 });

@@ -1,10 +1,10 @@
 {
-  "name": "dessera-blog",
+  "name": "dessera.github.io",
   "type": "module",
   "version": "1.0.0",
-  "description": "Dessera的个人主页",
-  "author": "Dessera <1533653159@qq.com>",
-  "license": "MIT",
+  "description": "Dessera的个人博客",
+  "author": "Dessera <lord.changed@foxmail.com>",
+  "license": "Apache-2.0",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:dev-clean": "vuepress dev docs --clean-cache --clean-temp",

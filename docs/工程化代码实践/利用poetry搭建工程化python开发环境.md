@@ -2,6 +2,9 @@
 title: 利用poetry搭建工程化python开发环境
 createTime: 2024/10/15 10:13:28
 permalink: /article/55fg352e/
+tags:
+- Poetry
+- Python
 ---
 
 想象一个场景，当你手中有一份python工具函数库或程序，你该如何将它分发给别人？不同的人对这个问题应当有完全不同的解法，但大体来说，你有两种方式：

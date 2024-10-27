@@ -7,19 +7,19 @@ import { notes } from "./notes";
  */
 export default defineThemeConfig({
   logo: "https://theme-plume.vuejs.press/plume.png",
-  // your git repo url
-  docsRepo: "",
+
+  docsRepo: "https://github.com/Dessera/dessera-blog",
   docsDir: "docs",
 
   appearance: true,
 
   profile: {
-    avatar: "https://theme-plume.vuejs.press/plume.png",
-    name: "DesseraBlog",
-    description: "Dessera的个人主页",
-    // circle: true,
-    // location: '',
-    // organization: '',
+    avatar: "/avatar.jpg",
+    name: "DE-LAB",
+    description: "Dessera的个人博客",
+    circle: true,
+    location: "China",
+    organization: "吉林大学",
   },
 
   navbar,

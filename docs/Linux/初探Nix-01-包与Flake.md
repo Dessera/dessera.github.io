@@ -2,6 +2,10 @@
 title: 初探Nix-01-包与Flake
 createTime: 2024/09/14 15:36:04
 permalink: /article/szm6xukr/
+tags:
+- Linux
+- Nix
+- Flake
 ---
 
 笔者认为，要熟练掌握某项技术或工具，就需要深入地亲自体会它，强迫自己进入“探索-碰壁-再探索”这一良性循环。学习某一语言如此，学习使用某个工具亦如。
