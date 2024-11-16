@@ -2,6 +2,10 @@
 title: 初探Nix-02-基于Flake的系统配置
 createTime: 2024/11/03 23:06:40
 permalink: /article/ulsks6i8/
+tags:
+- Linux
+- Nix
+- Flake
 ---
 
 上一次我们使用基于Flake的构建系统构建了一些程序，今天我们来亲手用Flake搭建我们的系统配置。
