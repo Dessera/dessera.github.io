@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Dessera的个人博客",
-  "author": "Dessera <lord.changed@foxmail.com>",
+  "author": "Dessera <dessera@qq.com>",
   "license": "Apache-2.0",
   "scripts": {
     "docs:dev": "vuepress dev docs",
