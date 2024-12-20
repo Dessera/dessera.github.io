@@ -3,6 +3,7 @@ title: 浅析C++所有权机制
 tags:
 - C++
 - 所有权
+- 资源管理
 createTime: 2024/04/04 09:39:41
 permalink: /article/w5vsqu3d/
 ---
