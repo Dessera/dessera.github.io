@@ -32,18 +32,22 @@ jobs:
         with:
           # 选择要使用的 node 版本
           node-version: 20
+        run: |
+          corepack enable
+          yarn install
+          yarn docs:build
 
-      - name: Install dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          # 使用 yarn 安装依赖
-          cmd: install
+      # - name: Install dependencies
+      #   uses: borales/actions-yarn@v4
+      #   with:
+      #     # 使用 yarn 安装依赖
+      #     cmd: install
 
-      - name: Build VuePress site
-        uses: borales/actions-yarn@v4
-        with:
-          # 运行构建脚本
-          cmd: docs:build
+      # - name: Build VuePress site
+      #   uses: borales/actions-yarn@v4
+      #   with:
+      #     # 运行构建脚本
+      #     cmd: docs:build
 
       # 运行构建脚本
       # Run the build script
