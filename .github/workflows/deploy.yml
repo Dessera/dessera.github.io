@@ -33,7 +33,8 @@ jobs:
           # 选择要使用的 node 版本
           node-version: 20
       - name: Setup corepack (yarn)
-        run: |         corepack enable
+        run: |         
+          corepack enable
           yarn install
           yarn docs:build
 
