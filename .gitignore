@@ -8,3 +8,6 @@ cache
 
 # vuepress cache
 docs/.vuepress/.cache
+
+# yarn cache
+.yarn

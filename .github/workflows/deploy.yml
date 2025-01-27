@@ -20,24 +20,35 @@ jobs:
           # "Last updated time" and other git log-related information require fetching all commit records.
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          # 选择要使用的 pnpm 版本
-          version: 9
-          # 使用 pnpm 安装依赖
-          run_install: true
+      # - name: Setup pnpm
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     # 选择要使用的 pnpm 版本
+      #     version: 9
+      #     # 使用 pnpm 安装依赖
+      #     run_install: true
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           # 选择要使用的 node 版本
           node-version: 20
 
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          # 使用 yarn 安装依赖
+          cmd: install
+
+      - name: Build VuePress site
+        uses: borales/actions-yarn@v4
+        with:
+          # 运行构建脚本
+          cmd: docs:build
 
       # 运行构建脚本
       # Run the build script
-      - name: Build VuePress site
-        run: pnpm run docs:build
+      # - name: Build VuePress site
+      #   run: pnpm run docs:build
 
 
       # 查看 workflow 的文档来获取更多信息
