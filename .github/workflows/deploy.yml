@@ -32,10 +32,11 @@ jobs:
         with:
           # 选择要使用的 node 版本
           node-version: 20
+      - name: Setup corepack (yarn)
         run: |
-          corepack enable
-          yarn install
-          yarn docs:build
+        corepack enable
+        yarn install
+        yarn docs:build
 
       # - name: Install dependencies
       #   uses: borales/actions-yarn@v4
