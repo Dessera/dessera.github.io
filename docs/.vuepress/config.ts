@@ -5,24 +5,36 @@ import { plumeTheme } from "vuepress-theme-plume";
 export default defineUserConfig({
   base: "/",
   lang: "zh-CN",
-  title: "DE-LAB",
+  title: "Dessera Lab",
   description: "Dessera的个人博客",
 
   bundler: viteBundler(),
 
   theme: plumeTheme({
     // 添加您的部署域名
-    // hostname: 'https://your_site_url',
+    hostname: "https://dessera.github.io",
 
     plugins: {
       /**
        * Shiki 代码高亮
        * @see https://theme-plume.vuejs.press/config/plugins/code-highlight/
        */
-      // shiki: {
-      //   languages: ['shell', 'bash', 'typescript', 'javascript'],
-      //   twoslash: true,
-      // },
+      shiki: {
+        languages: [
+          "shell",
+          "bash",
+          "typescript",
+          "javascript",
+          "c",
+          "c++",
+          "python",
+        ],
+        twoslash: true,
+        theme: {
+          dark: "one-dark-pro",
+          light: "one-light",
+        },
+      },
 
       /**
        * markdown enhance
@@ -64,7 +76,7 @@ export default defineUserConfig({
        * @see https://theme-plume.vuejs.press/guide/features/comments/
        */
       comment: {
-        provider: "Giscus", // "Artalk" | "Giscus" | "Twikoo" | "Waline"
+        provider: "Giscus",
         comment: true,
         repo: "Dessera/dessera.github.io",
         repoId: "R_kgDOMu79bw",

@@ -8,14 +8,14 @@ import { notes } from "./notes";
 export default defineThemeConfig({
   logo: "https://theme-plume.vuejs.press/plume.png",
 
-  docsRepo: "https://github.com/Dessera/dessera-blog",
-  docsDir: "docs",
+  // docsRepo: "https://github.com/Dessera/dessera-blog",
+  // docsDir: "docs",
 
   appearance: true,
 
   profile: {
     avatar: "/avatar.jpg",
-    name: "DE-LAB",
+    name: "Dessera Lab",
     description: "Dessera的个人博客",
     circle: true,
     location: "China",

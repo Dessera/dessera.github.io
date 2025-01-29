@@ -1,15 +1,14 @@
 ---
 pageLayout: home
-externalLinkIcon: false
 config:
-  -
-    type: hero
-    full: true
-    background: tint-plate
+  - type: banner
+    bannerMask:
+      light: 0.1
+      dark: 0.3
     hero:
-      name: DE-LAB
-      tagline: Code Lab of Dessera
-      text: Dessera 的个人博客
+      name: Dessera Lab
+      tagline: <C-s> my thoughts
+      text: Dessera的个人博客
       actions:
         -
           theme: brand

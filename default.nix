@@ -1,15 +1,21 @@
-{ 
+{
   lib,
-  callPackage 
+  callPackage,
+  nodejs_23,
 }:
 
 let
 
-  project = callPackage ./yarn-project.nix {} {
-    src = lib.cleanSource ./.;
-  };
+  project =
+    callPackage ./yarn-project.nix
+      {
+        nodejs = nodejs_23;
+      }
+      {
+        src = lib.cleanSource ./.;
+      };
 
-in 
+in
 project.overrideAttrs (oldAttrs: {
   buildPhase = ''
     runHook preBuild
