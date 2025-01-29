@@ -14,7 +14,12 @@ export default defineUserConfig({
     // 添加您的部署域名
     hostname: "https://dessera.github.io",
 
+    contributors: true,
+    changelog: true,
+
     plugins: {
+      git: process.env.NODE_ENV === "production",
+
       /**
        * Shiki 代码高亮
        * @see https://theme-plume.vuejs.press/config/plugins/code-highlight/

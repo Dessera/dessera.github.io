@@ -22,6 +22,10 @@ export default defineThemeConfig({
     organization: "吉林大学",
   },
 
+  copyright: {
+    license: "CC-BY-SA-4.0",
+  },
+
   navbar,
   notes,
   social: [{ icon: "github", link: "https://github.com/Dessera" }],
