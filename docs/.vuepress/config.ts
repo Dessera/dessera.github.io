@@ -14,6 +14,7 @@ export default defineUserConfig({
     // 添加您的部署域名
     hostname: "https://dessera.github.io",
 
+    copyright: "CC-BY-SA-4.0",
     contributors: true,
     changelog: true,
 
@@ -33,6 +34,8 @@ export default defineUserConfig({
           "c",
           "c++",
           "python",
+          "nix",
+          "toml",
         ],
         twoslash: true,
         theme: {
