@@ -7,8 +7,8 @@
 let
 
   yarnBin = fetchurl {
-    url = "https://repo.yarnpkg.com/4.3.1/packages/yarnpkg-cli/bin/yarn.js";
-    hash = "sha512-r3gmLX0SWvv+7XQGAqzoxeRAXNf0c1wI/rMnKGsv2yOQ+8oBWJv9H1CxJAVIt0gGdn9aBjyUtn5DGqvQ2G93dA==";
+    url = "https://repo.yarnpkg.com/4.4.1/packages/yarnpkg-cli/bin/yarn.js";
+    hash = "sha512-+CUnPQaJzJ6tMlnBSZgDdmLx3NBpEmN7IaRQ6Np8/rSxllu+5z0WknuqEgEFQSa8OFxvQ/9KpwXIYx0m4SRg8Q==";
   };
 
   cacheFolder = ".yarn/cache";
@@ -55,7 +55,7 @@ let
       rm $out/.gitignore
     '';
     outputHashMode = "recursive";
-    outputHash = "sha512-QB0FiIwSAhaB3TOai68ap9viC3d6SBGy3ljHWP+IgTZUxVkUEqhzgOPt4tC6L5z9xUm2rlV00BCgdyJJZrHSgQ==";
+    outputHash = "sha512-R7l8wrO5zpwFuFw0p12ua3SCYghVjChX2b9gyHTjUEd3EGGKiymCrWc3vnYP/WxMxH+6aT9vdgYYkFbTwuOL0g==";
   };
 
   # Main project derivation.
