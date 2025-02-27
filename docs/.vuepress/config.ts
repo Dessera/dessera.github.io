@@ -36,6 +36,7 @@ export default defineUserConfig({
           "python",
           "nix",
           "toml",
+          "rust",
         ],
         twoslash: true,
         theme: {
@@ -53,7 +54,7 @@ export default defineUserConfig({
         //   include: true,
         //   chart: true,
         //   echarts: true,
-        //   mermaid: true,
+        mermaid: true,
         //   flowchart: true,
       },
 
