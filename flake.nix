@@ -4,11 +4,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixcode = {
-      url = "github:Dessera/nixcode";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixcode.url = "github:Dessera/nixcode";
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nixcode.cachix.org"
+    ];
+
+    extra-trusted-public-keys = [
+      "nixcode.cachix.org-1:6FvhF+vlN7gCzQ10JIKVldbG59VfYVzxhH/+KGHvMhw="
+    ];
   };
 
   outputs =
@@ -27,32 +33,20 @@
           { pkgs, system, ... }:
           let
             target = pkgs.callPackage ./default.nix { };
-            code = withSystem system ({ inputs', ... }: inputs'.nixcode.packages.web);
+            code = withSystem system ({ inputs', ... }: inputs'.nixcode.packages.nixcode-web);
           in
           {
-            packages = {
-              default = target;
-            };
+            packages.default = target;
 
-            devShells = {
-              default = pkgs.mkShell {
-                inputsFrom = [ target ];
+            devShells.default = pkgs.mkShell {
+              inputsFrom = [ target ];
 
-                packages =
-                  (with pkgs; [
-                    nixd
-                    nixfmt-rfc-style
-                  ])
-                  ++ [ code ];
-              };
-              corepack = pkgs.mkShell {
-                packages = with pkgs; [
+              packages =
+                (with pkgs; [
                   nixd
                   nixfmt-rfc-style
-
-                  corepack
-                ];
-              };
+                ])
+                ++ [ code ];
             };
           };
       }
