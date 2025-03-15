@@ -9,6 +9,9 @@ export const navbar = defineNavbarConfig([
   {
     text: "笔记",
     icon: "mdi:notebook",
-    items: [{ text: "[WIP]nix教程", link: "/notes/nix/README.md" }],
+    items: [
+      { text: "[WIP]nix教程", link: "/notes/nix/README.md" },
+      { text: "[WIP]动手搭建自己的操作系统", link: "/notes/oslab/README.md" },
+    ],
   },
 ]);

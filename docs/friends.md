@@ -11,7 +11,7 @@ list:
     desc: 全能大佬
   -
     name: Charliechen114514
-    link: https://charliechen114514.github.io
+    link: https://www.charliechen114514.tech
     avatar: https://avatars.githubusercontent.com/u/108673387?v=4
     desc: C/C++/OS大爹
 ---
