@@ -194,9 +194,9 @@ tags:
 我们下载`tslib`的源码，签出一个分支（或者你可以直接下载release中的源代码）：
 
 ```bash
-git clone https://github.com/libts/tslib.git  # 克隆仓库
-cd tslib                                      # 进入
-git checkout release_1_23 1.23                # 签出tag 1.23作为一个分支
+git clone https://github.com/libts/tslib.git      # 克隆仓库
+cd tslib                                          # 进入
+git checkout -b release_1_23 1.23                 # 签出tag 1.23作为一个分支
 ```
 
 进入我们刚刚准备好的`release_1_23`，准备进行编译，注意它使用`autoconf`，一般情况下你需要以下依赖：
