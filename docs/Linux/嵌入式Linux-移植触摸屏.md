@@ -36,12 +36,12 @@ tags:
 
 至此，我们总结出：
 
-- 中断引脚：`GPIO01_IO9`
+- 中断引脚：`GPIO1_IO09`
 - 复位引脚：`SNVS_TAMPER9`
 
 同时我们注意到，中断引脚实际上是SD卡模块的复位引脚，我们需要移除它，否则会导致冲突。
 
-接下来，我们新增设备树节点：
+接下来，我们新增设备树节点，参考[Goodix-TS](https://www.kernel.org/doc/Documentation/devicetree/bindings/input/touchscreen/goodix.yaml)，我们先建立`AVDD28`和`VDDIO`的`regulator`节点。：
 
 ```c
 / {
@@ -61,7 +61,11 @@ tags:
     regulator-enable-high = <1>;
   };
 };
+```
 
+实际上，触摸屏`tsc`在设备树中已经存在，但正点原子的开发板中没有使用到它（同时，如果你玩LED的话，它还会和LED冲突），因此我们干脆禁用了原本的`tsc`，并直接挪用了它的`pinctrl`名字：
+
+```c
 &iomuxc {
   pinctrl_tsc: tscgrp {
     fsl,pins = <
@@ -75,6 +79,11 @@ tags:
   status = "disabled";
 };
 
+```
+
+最后，我们添加触摸屏节点：
+
+```c
 &i2c2 {
   touchscreen@14 {
     compatible = "goodix,gt1158";
@@ -84,17 +93,13 @@ tags:
     interrupt-parent = <&gpio1>;
     interrupts = <9 0>;
     irq-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
-    reset-gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+    reset-gpios = <&gpio5 9 GPIO_ACTIVE_LOW>;
     status = "okay";
     VDDIO-supply = <&reg_vddio>;
     AVDD28-supply = <&reg_avdd28>;
- };
+  };
 };
 ```
-
-我们在`&i2c2`节点下创建了触摸屏节点，并为他创建了两个`regulator`节点，分别对应触摸屏的`VDDIO`和`AVDD28`，并为他指定了`pinctrl_tsc`，其中标记了我们刚刚找到的两个引脚。
-
-实际上，`tsc`在设备树中已经存在，但正点原子的开发板中没有使用到它（同时，如果你玩LED的话，它还会和LED冲突），因此我们干脆禁用了原本的`tsc`，并直接挪用了它的`pinctrl`名字。
 
 这里涉及到I2C的地址，我们需要启动开发板，通过`i2cdetect`命令来检测：
 
@@ -113,7 +118,7 @@ tags:
 
 根据检测到的地址，我们要修改`touchscreen`后面的地址和节点内的`reg`属性。
 
-现在我们来处理冲突问题，我们查找设备树，发现`lcdif`的`pinctrl`使用了`SNVS_TAMPER9`，`usdhc1`的`pinctrl`和它的`regulator`使用了`GPIO1_IO09`，我们分别修改他们：
+现在我们来处理冲突问题，我们查找设备树，发现`lcdif`的`pinctrl`使用了`SNVS_TAMPER9`，`usdhc1`的`pinctrl`和它的`reg_sd1_vmmc`使用了`GPIO1_IO09`，我们分别修改他们：
 
 ```c
 &iomuxc {
@@ -123,7 +128,7 @@ tags:
       MX6UL_PAD_LCD_ENABLE__LCDIF_ENABLE  0x79
       MX6UL_PAD_LCD_HSYNC__LCDIF_HSYNC    0x79
       MX6UL_PAD_LCD_VSYNC__LCDIF_VSYNC    0x79
-      // no reset pin
+      // 移除 SNVS_TAMPER9
     >;
   };
 
@@ -137,16 +142,14 @@ tags:
       MX6UL_PAD_SD1_DATA3__USDHC1_DATA3     0x17059
       MX6UL_PAD_UART1_RTS_B__GPIO1_IO19     0x17059
       MX6UL_PAD_GPIO1_IO05__USDHC1_VSELECT  0x17059
-      // no reset pin
+      // 移除 GPIO1_IO09
     >;
   };
 };
 
-&usdhc1 {
- /delete-property/ vmmc-supply;
+&reg_sd1_vmmc {
+  /delete-property/ gpio;
 };
-
-/delete-node/ &reg_sd1_vmmc;
 ```
 
 这里的修改具有一定的争议，因为笔者尚不清楚`regulator`的硬件工作原理，所以，它只是能够正确工作。
@@ -188,7 +191,7 @@ tags:
 
 ## 二，软件库移植
 
-我们下载`tslib`的源码，签出一个分支：
+我们下载`tslib`的源码，签出一个分支（或者你可以直接下载release中的源代码）：
 
 ```bash
 git clone https://github.com/libts/tslib.git  # 克隆仓库
@@ -234,11 +237,11 @@ export TSLIB_CONFFILE=/etc/ts.conf
 export TSLIB_PLUGINDIR=/usr/lib/ts
 ```
 
-同样，`TSLIB_TSDEVICE`要制定你自己的设备。
+同样，`TSLIB_TSDEVICE`要指定你自己的设备。
 
 ## 三，上电测试
 
-进入开发板，使用`tslib`自带的测试程序测试，如果能够正常触控，恭喜你，触摸屏移植成功！
+进入开发板，使用`tslib`自带的测试程序`ts_test`测试，如果能够正常触控，恭喜你，触摸屏移植成功！
 
 笔者的测试效果：
 
