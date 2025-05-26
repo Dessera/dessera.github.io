@@ -2,6 +2,10 @@
 title: 嵌入式LInux-基于I.MX6ULL移植cpython
 createTime: 2025/05/26 13:47:08
 permalink: /article/ukts2q61/
+tags:
+- Linux
+- 嵌入式
+- Python
 ---
 
 `cpython`的移植相比起其他的基础库略显复杂，我们需要先编译它的前置库，再编译`cpython`，老样子，我们的工作环境如下：
@@ -126,15 +130,10 @@ CFLAGS="-I/tmp/zlib_build/include -I/tmp/libffi_build/include -L/tmp/zlib_build/
 
 最后，我们禁用了`test`模块和`pip`，因为我们不需要它。
 
-编译：
+编译并安装：
 
 ```bash
 make -j
-```
-
-安装：
-
-```bash
 make install
 ```
 
