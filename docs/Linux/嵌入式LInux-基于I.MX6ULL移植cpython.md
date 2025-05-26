@@ -15,19 +15,27 @@ tags:
 - Linux 6.12.3
 - zlib 1.3.1
 - libffi 3.4.8
+- ncurses 6.5
 - cpython 3.13.3
 
 ## 一，什么是 cpython
 
-在讲如何移植`cpython`之前，我们肯定需要了解它是什么，如果你对该内容已经有所了解，可以直接跳过本节。
+在讲如何移植`cpython`之前，我们肯定需要了解它是什么，如果你对该内容已经有所了解，*可以直接跳过本节*。
 
-我们都知道`Python`，作为一个解释型的编程语言，`Python`在运行时一定要有名为**解释器**的程序来解析和执行`Python`代码，`cpython`就是`Python`的官方解释器，同时，它也是`Python`名义上的标准。
+`Python`作为解释型编程语言，其在运行时一定要有名为**解释器**的程序来解析和执行`Python`代码，`cpython`就是`Python`的官方解释器，同时，它也是`Python`名义上的标准。
 
-除了`cpython`之外，`Python`解释器还有`pypy`、`jython`、`RustPython`、`micropython`等等，他们往往是针对不同场景和需求而设计的，比如`pypy`是针对性能优化的，`jython`是针对`Java`环境的，`micropython`是针对微控制器环境的。
+除了`cpython`之外，`Python`还有很多第三方解释器：
 
-## 二，移植 zlib 和 libffi
+- `pypy`：针对性能优化的解释器。
+- `jython`：针对`Java`环境的解释器。
+- `micropython`：针对微控制器环境的解释器。
+- `RustPython`：用`Rust`编写的解释器。
 
-在移植`cpython`之前，我们需要先移植它的前置库，也就是`zlib`和`libffi`。
+## 二，移植依赖库
+
+根据笔者的整理，`cpython`需要`zlib`、`libffi`和`ncurses`三个前置库。
+
+### 1. zlib
 
 `zlib`相对较好移植，我们先下载它的源码：
 
@@ -58,7 +66,9 @@ cmake --build build
 cmake --install build
 ```
 
-`libffi`略显复杂，因为在这个版本中，它有相当严重的构建bug，为了尽可能规避该问题，我们需要下载其`release`中的源码并解压：
+### 2. libffi
+
+最近的`libffi`版本有相当严重的构建bug（至少包含了3.4.6和3.4.8两个版本），为了规避该问题，我们需要先下载其`release`中的源码并解压：
 
 ```bash
 wget https://github.com/libffi/libffi/releases/download/v3.4.8/libffi-3.4.8.tar.gz
@@ -87,19 +97,59 @@ cp ../libffi-3.4.8/Makefile.in .
 
 > 为什么？因为`libffi`不兼容新的`autoconf`，导致其生成了错误的`Makefile.in`，详情请参考[Issue#853](https://github.com/libffi/libffi/issues/853)
 
-然后，我们再运行`configure`：
+然后，我们再运行`configure`，同样，`--prefix`指向你的安装目录：
 
 ```bash
 ./configure --host=arm-linux-gnueabihf --prefix=/tmp/libffi_build
 ```
-
-同样，`--prefix`指向你的安装目录。
 
 编译并安装：
 
 ```bash
 make -j
 make install
+```
+
+### 3. ncurses
+
+`ncurses`源码保存在`gnu`的镜像中，我们直接下载：
+
+```bash
+wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.5.tar.gz
+tar -xvf ncurses-6.5.tar.gz
+cd ncurses-6.5
+```
+
+进行如下配置，同样，`--prefix`指向你的安装目录：
+
+```bash
+./configure --prefix=/tmp/ncurses_build --host=arm-linux-gnueabihf \
+  --with-shared --without-debug --without-ada --enable-pc-files \
+  --with-cxx-binding --with-cxx-shared --enable-ext-colors --enable-ext-mouse \
+  --enable-overwrite --without-progs
+```
+
+这里的参数笔者不做详细解释，读者可以参考`./configure --help`。
+
+编译并安装：
+
+```bash
+make -j
+make install
+```
+
+安装后，我们需要创建`libncursesw`到`libncurses`的符号链接，虽然`python`用不到它们，但其他程序可能需要（比如`bash`）：
+
+```bash
+cd /tmp/ncurses_build/lib
+ln -s libncursesw.so.6.5 libncurses.so.6.5
+ln -s libncursesw.so.6 libncurses.so.6
+ln -s libncursesw.so libncurses.so
+ln -s libncursesw.a libncurses.a
+ln -s libncurses++w.so.6.5 libncurses++.so.6.5
+ln -s libncurses++w.so.6 libncurses++.so.6
+ln -s libncurses++w.so libncurses++.so
+ln -s libncurses++w.a libncurses++.a
 ```
 
 ## 三，移植 cpython
@@ -112,17 +162,32 @@ cd cpython
 git checkout -b release_3_13_3 v3.13.3
 ```
 
-`cpython`使用`configure`，我们直接进行配置：
+在配置之前，我们需要手动修改`Makefile.pre.in`，因为现在的`cpython`实际上是不支持交叉编译的！
+
+在`Makefile.pre.in`中，找到并注释如下内容：
+
+![cpython修改](./嵌入式LInux-基于I.MX6ULL移植cpython/cpython修改.png)
+
+> 光凭上面的注释我们也能猜到这是为什么，这个地方会引用构建好的`python`测试模块，但我们是交叉编译的，这东西不能执行！
+
+接着，我们进行配置：
 
 ```bash
-CFLAGS="-I/tmp/zlib_build/include -I/tmp/libffi_build/include -L/tmp/zlib_build/lib -L/tmp/libffi_build/lib" LDFLAGS="-L/tmp/zlib_build/lib -L/tmp/libffi_build/lib" ./configure \
+CFLAGS="..." LDFLAGS="..." ./configure \
   --host=arm-linux-gnueabihf --build=x86_64-linux-gnu \
   --prefix=/tmp/cpython_build --with-build-python --enable-shared \
   --enable-ipv6 ac_cv_file__dev_ptmx=0 ac_cv_file__dev_ptc=0 \
   --enable-optimizations --disable-test-modules --with-ensurepip=no
 ```
 
-关于`CFLAGS`和`LDFLAGS`我们需要做的实际上只是把刚刚构建的依赖传送给编译器，所以这里的路径要替换成你自己的，同样，`--prefix`指向你自己的安装路径。
+关于`CFLAGS`和`LDFLAGS`我们需要做的实际上只是把刚刚构建的依赖传送给编译器，这里的工作就是把`include`和`lib`目录添加到编译器的搜索路径中，例如：
+
+```bash
+CFLAGS="-I/tmp/zlib_build/include -I/tmp/libffi_build/include -I/tmp/ncurses_build/include -L/tmp/zlib_build/lib -L/tmp/libffi_build/lib -L/tmp/ncurses_build/lib"
+LDFLAGS="-L/tmp/zlib_build/lib -L/tmp/libffi_build/lib -L/tmp/ncurses_build/lib"
+```
+
+当然，如果你将他们安装到了相同的路径中，就不必添加如此多的路径了。
 
 `--build`参数实际是构建机器的架构（上位机），这里笔者不确定这种写法是否正确，但是可以正常编译。
 
