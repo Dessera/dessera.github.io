@@ -1,5 +1,5 @@
 ---
-title: 嵌入式Linux-移植触摸屏
+title: 嵌入式Linux-基于I.MX6ULL移植触摸屏
 createTime: 2025/05/20 22:17:18
 permalink: /article/zr95sqvz/
 tags:
@@ -24,15 +24,15 @@ tags:
 
 要添加触摸屏的支持，我们首先需要了解触摸屏在开发板上的接线，通过查阅正点原子的**开发板原理图（底板）**，我们可以得到触摸屏的接线：
 
-![LCD模块](./嵌入式Linux-移植触摸屏/触摸屏引脚01.png)
+![LCD模块](./嵌入式Linux-基于I.MX6ULL移植触摸屏/触摸屏引脚01.png)
 
 我们从正点的手册里知道`CT_INT`和`CT_RST`分别是触摸屏的中断和复位引脚，继续寻找他们的源头：
 
-![IMXCORE](./嵌入式Linux-移植触摸屏/触摸屏引脚02.png)
+![IMXCORE](./嵌入式Linux-基于I.MX6ULL移植触摸屏/触摸屏引脚02.png)
 
 发现他们分别是`SNVS_TAMPER9`和`GPIO_9`，前往核心板原理图，找到`GPIO_9`：
 
-![GPIO_9](./嵌入式Linux-移植触摸屏/触摸屏引脚03.png)
+![GPIO_9](./嵌入式Linux-基于I.MX6ULL移植触摸屏/触摸屏引脚03.png)
 
 至此，我们总结出：
 
@@ -245,7 +245,7 @@ export TSLIB_PLUGINDIR=/usr/lib/ts
 
 笔者的测试效果：
 
-![测试效果](./嵌入式Linux-移植触摸屏/触摸屏效果.jpg)
+![测试效果](./嵌入式Linux-基于I.MX6ULL移植触摸屏/触摸屏效果.jpg)
 
 ## 四，总结
 
