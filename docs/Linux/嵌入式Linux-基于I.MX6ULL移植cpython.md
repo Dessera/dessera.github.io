@@ -1,5 +1,5 @@
 ---
-title: 嵌入式LInux-基于I.MX6ULL移植cpython
+title: 嵌入式Linux-基于I.MX6ULL移植cpython
 createTime: 2025/05/26 13:47:08
 permalink: /article/ukts2q61/
 tags:
@@ -26,10 +26,10 @@ tags:
 
 除了`cpython`之外，`Python`还有很多第三方解释器：
 
-- `pypy`：针对性能优化的解释器。
-- `jython`：针对`Java`环境的解释器。
-- `micropython`：针对微控制器环境的解释器。
-- `RustPython`：用`Rust`编写的解释器。
+- [pypy](https://github.com/pypy/pypy)：针对性能优化的解释器。
+- [jython](https://github.com/jython/jython)：针对`Java`环境的解释器。
+- [micropython](https://github.com/micropython/micropython)：针对微控制器环境的解释器。
+- [RustPython](https://github.com/RustPython/RustPython)：用`Rust`编写的解释器。
 
 ## 二，移植依赖库
 
@@ -166,7 +166,7 @@ git checkout -b release_3_13_3 v3.13.3
 
 在`Makefile.pre.in`中，找到并注释如下内容：
 
-![cpython修改](./嵌入式LInux-基于I.MX6ULL移植cpython/cpython修改.png)
+![cpython修改](./嵌入式Linux-基于I.MX6ULL移植cpython/cpython修改.png)
 
 > 光凭上面的注释我们也能猜到这是为什么，这个地方会引用构建好的`python`测试模块，但我们是交叉编译的，这东西不能执行！
 
@@ -206,13 +206,13 @@ make install
 
 将所有文件拷贝到根文件系统上，上电测试：
 
-![cpython测试](./嵌入式LInux-基于I.MX6ULL移植cpython/cpython测试.png)
+![cpython测试](./嵌入式Linux-基于I.MX6ULL移植cpython/cpython测试.png)
 
-如果你没有编译`bash`，那么你的解释器可能会报错，不过不影响基础功能：
+一般情况下，解释器可能会报错，它会导致`python`的交互终端缺失部分功能，不过不影响使用：
 
-![cpython报错](./嵌入式LInux-基于I.MX6ULL移植cpython/cpython报错.png)
+![cpython报错](./嵌入式Linux-基于I.MX6ULL移植cpython/cpython报错.png)
 
-这是因为缺少`terminfo`，如果你编译了`bash`，可以在`/etc/profile`中添加如下内容：
+这是因为缺少`terminfo`，安装`ncurses`时，该文件夹会被一同安装，我们在`/etc/profile`中添加如下内容：
 
 ```bash
 export TERMINFO=/usr/lib/terminfo
