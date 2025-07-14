@@ -37,6 +37,7 @@ export default defineUserConfig({
           "nix",
           "toml",
           "rust",
+          "asm",
         ],
         twoslash: true,
         theme: {
