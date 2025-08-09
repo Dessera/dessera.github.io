@@ -37,7 +37,7 @@ public:
 > 当然，这里的类只是笔者需求的简化版本，笔者的项目实际上有更为复杂的需求
 
 ```cpp
-class IMAPClient {
+class IMAPClient : public BaseClient {
 public:
   IMAPClient() = default;
   ~IMAPClient() override = default;
@@ -53,7 +53,7 @@ public:
   }
 };
 
-class SMTPClient {
+class SMTPClient : public BaseClient {
 public:
   SMTPClient() = default;
   ~SMTPClient() override = default;
@@ -69,7 +69,7 @@ public:
   }
 };
 
-class POPClient {
+class POPClient : public BaseClient {
 public:
   POPClient() = default;
   ~POPClient() override = default;
