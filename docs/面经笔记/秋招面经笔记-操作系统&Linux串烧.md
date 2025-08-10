@@ -142,4 +142,4 @@ tags:
 
 ## 参考文章
 
-[阿秀的学习笔记-计算机网络](https://interviewguide.cn/notes/03-hunting_job/02-interview/02-01-os.html)
+[阿秀的学习笔记-操作系统](https://interviewguide.cn/notes/03-hunting_job/02-interview/02-01-os.html)
