@@ -139,3 +139,7 @@ tags:
     - `tasklet`：使用两类软中断`HI_SOFTIRQ`和`TASKLET_SOFTIRQ`，可以动态增减，同类`tasklet`不能并发执行
     - 工作队列：利用内核线程执行，可以睡眠和阻塞
 - 软件中断：异常、系统调用
+
+## 参考文章
+
+[阿秀的学习笔记-计算机网络](https://interviewguide.cn/notes/03-hunting_job/02-interview/02-01-os.html)
