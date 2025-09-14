@@ -18,73 +18,35 @@ export default defineUserConfig({
     contributors: true,
     changelog: true,
 
+    markdown: {
+      demo: true,
+      mermaid: true,
+    },
+
+    codeHighlighter: {
+      langs: [
+        "shell",
+        "bash",
+        "typescript",
+        "javascript",
+        "c",
+        "c++",
+        "python",
+        "nix",
+        "toml",
+        "rust",
+        "asm",
+      ],
+      twoslash: true,
+      themes: {
+        dark: "one-dark-pro",
+        light: "one-light",
+      },
+    },
+
     plugins: {
       git: process.env.NODE_ENV === "production",
 
-      /**
-       * Shiki 代码高亮
-       * @see https://theme-plume.vuejs.press/config/plugins/code-highlight/
-       */
-      shiki: {
-        languages: [
-          "shell",
-          "bash",
-          "typescript",
-          "javascript",
-          "c",
-          "c++",
-          "python",
-          "nix",
-          "toml",
-          "rust",
-          "asm",
-        ],
-        twoslash: true,
-        theme: {
-          dark: "one-dark-pro",
-          light: "one-light",
-        },
-      },
-
-      /**
-       * markdown enhance
-       * @see https://theme-plume.vuejs.press/config/plugins/markdown-enhance/
-       */
-      markdownEnhance: {
-        demo: true,
-        //   include: true,
-        //   chart: true,
-        //   echarts: true,
-        mermaid: true,
-        //   flowchart: true,
-      },
-
-      /**
-       *  markdown power
-       * @see https://theme-plume.vuejs.press/config/plugin/markdown-power/
-       */
-      // markdownPower: {
-      //   pdf: true,
-      //   caniuse: true,
-      //   plot: true,
-      //   bilibili: true,
-      //   youtube: true,
-      //   icons: true,
-      //   codepen: true,
-      //   replit: true,
-      //   codeSandbox: true,
-      //   jsfiddle: true,
-      //   repl: {
-      //     go: true,
-      //     rust: true,
-      //     kotlin: true,
-      //   },
-      // },
-
-      /**
-       * comments
-       * @see https://theme-plume.vuejs.press/guide/features/comments/
-       */
       comment: {
         provider: "Giscus",
         comment: true,

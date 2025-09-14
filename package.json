@@ -13,16 +13,17 @@
     "vp-update": "vp-update"
   },
   "devDependencies": {
-    "@vuepress/bundler-vite": "2.0.0-rc.19",
+    "@vuepress/bundler-vite": "2.0.0-rc.24",
     "http-server": "^14.1.1",
     "sass": "^1.83.4",
     "typescript": "^5.7.2",
     "vue": "^3.5.13",
-    "vuepress": "2.0.0-rc.19",
-    "vuepress-theme-plume": "1.0.0-rc.129"
+    "vuepress": "2.0.0-rc.24",
+    "vuepress-theme-plume": "1.0.0-rc.163"
   },
   "packageManager": "yarn@4.4.1+sha224.fd21d9eb5fba020083811af1d4953acc21eeb9f6ff97efd1b3f9d4de",
   "dependencies": {
+    "@vuepress/shiki-twoslash": "2.0.0-rc.112",
     "mermaid": "^11.4.1"
   }
 }
