@@ -1,5 +1,5 @@
 ---
-title: 深度学习笔记-MNN Interpreter创建流程
+title: 深度学习笔记-MNN Session创建流程
 createTime: 2025/10/23 22:54:30
 permalink: /article/swxazfys/
 tags:
