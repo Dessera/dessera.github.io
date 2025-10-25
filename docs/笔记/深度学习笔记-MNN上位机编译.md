@@ -3,9 +3,9 @@ title: 深度学习笔记-MNN上位机编译
 createTime: 2025/10/08 17:26:46
 permalink: /article/93byyy63/
 tags:
-- C++
-- 深度学习
-- MNN
+  - C++
+  - 深度学习
+  - MNN
 ---
 
 笔者最近在研究深度学习相关的框架，第一个目标便是 MNN 。MNN（Mobile Neural Network）是阿里巴巴集团开源的轻量级深度学习推理框架，具有良好的多端支持，使用 C++11 构建。
@@ -193,10 +193,10 @@ int main(int argc, const char* argv[]) {
 
     {
         std::shared_ptr<Tensor> wrapTensor(ImageProcess::createImageTensor<uint8_t>(width, height, 4, nullptr), MNN::Tensor::destroy);
-        
+
         // Operate the conversion
         pretreat->convert((uint8_t*)inputImage, width, height, 0, wrapTensor.get());
-        
+
         // Write file
         write_img(argv[3], width, height, 4, wrapTensor->host<uint8_t>(), 4 * width);
     }
