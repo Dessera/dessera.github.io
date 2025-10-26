@@ -123,7 +123,7 @@ const flatbuffers::Vector<flatbuffers::Offset<Op>> *oplists() const {
 
 `Session`的创建依赖于`createSession`族函数，其中涉及到两个配置结构：
 
-- `ScheduleConfig`: `Session`的运行时信息（推理后端/线程数量等）
+- `ScheduleConfig`: `Session`的运行时信息（推理运行时类型/线程数量等）
 - `BackendConfig`：后端需要注意的配置信息（精度/内存策略/供电策略）
 
 所有的`Session`创建流程最终都会汇集到`createMultiPathSession`，其签名为：
@@ -134,13 +134,13 @@ Session* Interpreter::createMultiPathSession(const std::vector<ScheduleConfig>& 
 
 值得注意的是，`Session`可以将模型推导分为多个子路径，`createMultiPathSession`支持传入一个配置列表来创建多个推理路径，每个路径拥有不同的配置选项。
 
-该接口的第二参数是运行时信息，其本质是一张包含了所有推理后端的`std::map`：
+该接口的第二参数是运行时信息，其本质是一张包含了所有推理运行时的`std::map`：
 
 ```cpp
 typedef std::pair<std::map<MNNForwardType, std::shared_ptr<Runtime>>,  std::shared_ptr<Runtime>> RuntimeInfo;
 ```
 
-`Runtime`是推理使用的后端实例，负责真正的计算和推理资源管理，而`MNNForwardType`是后端类型，其典型值为：
+`Runtime`是推理使用的运行时实例，而`MNNForwardType`是推理运行时类型，其典型值为：
 
 ```cpp
 typedef enum {
@@ -155,9 +155,9 @@ typedef enum {
 } MNNForwardType;
 ```
 
-`RuntimeInfo`的第一项是所有可用的后端列表，第二项是固定的 CPU 后端。
+`RuntimeInfo`的第一项是所有可用的运行时列表，第二项是固定的 CPU 运行时。
 
-### 后端创建
+### 运行时创建
 
 `createSession`会调用`createMultiPathSession`的变体，其接口如下：
 
@@ -171,15 +171,15 @@ Session* Interpreter::createMultiPathSession(const std::vector<ScheduleConfig>& 
 RuntimeInfo Interpreter::createRuntime(const std::vector<ScheduleConfig>& configs);
 ```
 
-其实现可以总结为通过`configs`创建不同的后端，并自动创建 CPU 作为备用后端，限于篇幅不做展开。
+其实现可以总结为通过`configs`创建不同的运行时，并自动创建 CPU 作为备用运行时（如果之前没有创建），限于篇幅不做展开。
 
-> 如果有相同类型但不同配置的后端，后初始化的会覆盖先初始化的。
+> 如果有相同类型但不同配置的运行时，后初始化的会覆盖先初始化的。
 
 ### Session的创建
 
-当创建好后端之后，就可以继续创建`Session`了，`createMultiPathSession`的后续流程可以总结为以下部分：
+当创建好运行时之后，就可以继续创建`Session`了，`createMultiPathSession`的后续流程可以总结为以下部分：
 
-- 配置后端（`setRuntimeHint`）
+- 配置运行时（`setRuntimeHint`）
 - 创建`SessionInfo`（张量和其他运行时数据的真正位置）
 - 设置会话缓存（加速部分后端初始化）
 - 创建`Session`
