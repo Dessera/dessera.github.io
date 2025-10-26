@@ -13,7 +13,7 @@ tags:
 - Session：提供会话式的推理接口
 - Module：提供表达式的推理接口
 
-本文首先分析 Session 接口。
+本文首先分析 Session 接口，主要聚焦在`Interpreter`类以上的逻辑部分。
 
 ## 创建一个推理会话
 
@@ -30,7 +30,7 @@ tags:
 2. 将模型转化为计算图
 3. 进行计算
 
-上文我们提到的“模型数据”即从文件中读取的模型数据，而“推理资源”则是转化的计算图和其他计算时数据。
+上文我们提到的“模型数据”即从文件中读取的模型数据，而“推理资源”则是转化的计算图（张量、算子等计算时数据）。
 
 按照 MNN 文档的说法，就是：
 
@@ -109,31 +109,15 @@ net->net = GetNet(net->buffer.get());
     }
 ```
 
-### Net 和 oplists
+### 网络和算子
 
-我们在编译时通过脚本生成了`schema`，而`Net`和`oplists`相关的内容就是在这个时候被生成的，以`Net`为例，其本质是`flatbuffers::Table`实现的偏移量表，而获取`oplists`，实际上就是按照偏移量获取其某个位置的指针：
+我们在编译时通过脚本生成了`schema`，而`Net`和`oplists`相关的内容结构就是在这个时候被生成的，以`Net`为例，其本质是`flatbuffers::Table`实现的偏移量表，而获取`oplists`，实际上就是按照偏移量获取其某个位置的指针：
 
 ```cpp
 const flatbuffers::Vector<flatbuffers::Offset<Op>> *oplists() const {
   return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Op>> *>(10);
 }
 ```
-
-`oplists`是`Op`类指针的集合（实际上还有一层偏移量表的封装，这里不谈），其一部分功能是存储模型的元信息，我们来看另一段与本文无关的代码（`express/module/Module.cpp`）：
-
-```cpp
-for (int i=0; i<net->oplists()->size(); ++i) {
-    auto op = net->oplists()->GetAs<Op>(i);
-    if (op->type() == OpType_Input && op->main_as_Input() != nullptr) {
-        auto inputInfo = op->main_as_Input();
-        // ...
-    }
-}
-```
-
-不难发现这里实际上是在获取输入信息（维度、大小等）。
-
-> 因为笔者还没有接下来阅读后续的推理流程，所以并不对`oplists`的作用下定论。
 
 ## Session 的创建细节
 
@@ -148,7 +132,7 @@ for (int i=0; i<net->oplists()->size(); ++i) {
 Session* Interpreter::createMultiPathSession(const std::vector<ScheduleConfig>& configs, const RuntimeInfo& runtime);
 ```
 
-值得注意的是，`Session`可以“同时”进行多个输入输出，我们可以通过`createMultiPathSession`来创建多个推理通道，每个通道拥有不同的配置选项。
+值得注意的是，`Session`可以将模型推导分为多个子路径，`createMultiPathSession`支持传入一个配置列表来创建多个推理路径，每个路径拥有不同的配置选项。
 
 该接口的第二参数是运行时信息，其本质是一张包含了所有推理后端的`std::map`：
 
@@ -171,7 +155,7 @@ typedef enum {
 } MNNForwardType;
 ```
 
-`RuntimeInfo`的第一项是所有可用的后端列表，第二项是默认使用的后端。
+`RuntimeInfo`的第一项是所有可用的后端列表，第二项是固定的 CPU 后端。
 
 ### 后端创建
 
