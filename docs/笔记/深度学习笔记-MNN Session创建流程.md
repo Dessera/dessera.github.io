@@ -171,7 +171,7 @@ Session* Interpreter::createMultiPathSession(const std::vector<ScheduleConfig>& 
 RuntimeInfo Interpreter::createRuntime(const std::vector<ScheduleConfig>& configs);
 ```
 
-其实现可以总结为通过`configs`创建不同的后端，并自动选择`MNN_FORWARD_CPU`作为默认后端，限于篇幅不做展开。
+其实现可以总结为通过`configs`创建不同的后端，并自动创建 CPU 作为备用后端，限于篇幅不做展开。
 
 > 如果有相同类型但不同配置的后端，后初始化的会覆盖先初始化的。
 
