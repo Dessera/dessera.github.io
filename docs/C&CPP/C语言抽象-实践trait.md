@@ -1,5 +1,4 @@
 ---
-title: C语言抽象-实践trait
 date: 2025-02-27 15:17:55
 tags:
 - C
@@ -9,6 +8,8 @@ tags:
 categories:
 - C&CPP
 ---
+
+# C语言抽象-实践trait
 
 ## 前言
 

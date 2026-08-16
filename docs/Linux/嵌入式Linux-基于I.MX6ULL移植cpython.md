@@ -1,5 +1,4 @@
 ---
-title: 嵌入式Linux-基于I.MX6ULL移植cpython
 date: 2025-05-26 13:47:08
 tags:
 - Linux
@@ -8,6 +7,8 @@ tags:
 categories:
 - Linux
 ---
+
+# 嵌入式Linux-基于I.MX6ULL移植cpython
 
 `cpython`的移植相比起其他的基础库略显复杂，我们需要先编译它的前置库，再编译`cpython`，老样子，我们的工作环境如下：
 

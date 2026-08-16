@@ -1,5 +1,4 @@
 ---
-title: Linux2.6.24-内核数据结构之list_head
 date: 2024-11-06 21:50:09
 tags:
 - Linux
@@ -8,6 +7,8 @@ tags:
 categories:
 - Linux
 ---
+
+# Linux2.6.24-内核数据结构之list_head
 
 笔者近期正在阅读 *深入Linux内核架构 (Wolfgang Mauerer)* 作为Linux内核学习的入门书籍，几个月前，我的朋友曾极力向我推荐这本书，他对于内核数据结构实现的赞美勾起了我的兴趣。
 

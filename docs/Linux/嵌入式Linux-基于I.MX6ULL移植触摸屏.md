@@ -1,5 +1,4 @@
 ---
-title: 嵌入式Linux-基于I.MX6ULL移植触摸屏
 date: 2025-05-20 22:17:18
 tags:
 - Linux
@@ -7,6 +6,8 @@ tags:
 categories:
 - Linux
 ---
+
+# 嵌入式Linux-基于I.MX6ULL移植触摸屏
 
 笔者上个月购买了一块正点原子的`I.MX6ULL`开发板，并且研究了一套自己的移植方案，今天来分享一下其中对于触摸屏的移植过程。
 
