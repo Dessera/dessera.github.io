@@ -18,6 +18,7 @@ const blogTheme = getThemeConfig({
         },
         mobileMinify: true,
     },
+    mermaid: true,
     themeColor: "el-blue",
     author: "Dessera",
 });
