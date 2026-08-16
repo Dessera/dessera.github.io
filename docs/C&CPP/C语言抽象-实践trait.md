@@ -124,7 +124,6 @@ flowchart LR
    #endif
    ```
 
-
    ```c
    // 用弱引用指定默认实现
    size_t
@@ -173,6 +172,7 @@ impl Readable for HttpReader {
     }
 }
 ```
+
 函数可以声明他们返回一个实现了`Readable`的类型，或者需要一个实现了`Readable`的类型作为参数，这被称为约束，比如：
 
 ```rust
@@ -225,7 +225,7 @@ where
 
 > 可以参考开源项目`fibdrv`中的[fibdrv.c](https://github.com/sysprog21/fibdrv/blob/master/fibdrv.c#L112)
 
-2. `list_head`：`list_head`是一个链表节点，它将链表操作从真正的链表中抽离出来，通过`container_of`宏和实际链表元素之间相互转换，从而实现了链表操作的复用。
+1. `list_head`：`list_head`是一个链表节点，它将链表操作从真正的链表中抽离出来，通过`container_of`宏和实际链表元素之间相互转换，从而实现了链表操作的复用。
 
 结合`VFS`（函数指针）和`list_head`的抽象方式，我们能够近似地在`C`中实现`trait`。
 
